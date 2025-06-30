@@ -1,7 +1,10 @@
 // backend/app.js
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const { initializePostgres } = require('./config/sequelize');
+const channelRoutes = require('./routes/channelRoutes');
 
 // Middleware to parse JSON requests
 app.use(express.json());
@@ -12,8 +15,9 @@ app.use(cors({
 app.options('*', cors()); // enable pre-flight across-the-board
 
 // Set up the API routes
-// TODO
+app.use('/api/channels', channelRoutes);
 
-// Start the server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+initializePostgres().then(() => {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+});
