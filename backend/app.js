@@ -1,6 +1,5 @@
 // backend/app.js
 require('dotenv').config();
-const connectDB = require('./config/mongo');
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -19,7 +18,6 @@ app.options('*', cors()); // enable pre-flight across-the-board
 app.use('/api/channels', channelRoutes);
 
 const PORT = process.env.PORT || 8080;
-connectDB();
 initializePostgres().then(() => {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
