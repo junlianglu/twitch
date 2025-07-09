@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../../config/sequelize');
+const { sequelize } = require('../config/sequelize');
 const Channel = require('./Channel');
+const User = require('./User');
 
 const Video = sequelize.define('Video', {
   id: {
@@ -59,8 +60,20 @@ const Video = sequelize.define('Video', {
   },
 });
 
-// Define association
+// Define associations
 Video.belongsTo(Channel, { foreignKey: 'channelId', as: 'channel' });
 Channel.hasMany(Video, { foreignKey: 'channelId', as: 'videos' });
+
+// Many-to-many relationship for recommendations
+Video.belongsToMany(User, { 
+  through: 'UserWatchHistory', 
+  foreignKey: 'videoId', 
+  as: 'viewers' 
+});
+User.belongsToMany(Video, { 
+  through: 'UserWatchHistory', 
+  foreignKey: 'userId', 
+  as: 'watchedVideos' 
+});
 
 module.exports = Video; 

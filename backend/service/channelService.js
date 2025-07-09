@@ -1,4 +1,4 @@
-const Channel = require('../entity/postgres/Channel');
+const Channel = require('../entity/Channel');
 
 async function getAllChannels() {
   return await Channel.findAll();
