@@ -1,6 +1,6 @@
-const Video = require('../entity/postgres/Video');
-const Channel = require('../entity/postgres/Channel');
-const UserWatchHistory = require('../entity/postgres/UserWatchHistory');
+const Video = require('../entity/Video');
+const Channel = require('../entity/Channel');
+const UserWatchHistory = require('../entity/UserWatchHistory');
 const { Op } = require('sequelize');
 
 // Get all videos with filtering and pagination

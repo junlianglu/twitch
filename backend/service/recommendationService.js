@@ -1,7 +1,7 @@
-const User = require('../entity/postgres/User');
-const Video = require('../entity/postgres/Video');
-const UserWatchHistory = require('../entity/postgres/UserWatchHistory');
-const Recommendation = require('../entity/postgres/Recommendation');
+const User = require('../entity/User');
+const Video = require('../entity/Video');
+const UserWatchHistory = require('../entity/UserWatchHistory');
+const Recommendation = require('../entity/Recommendation');
 const { Op } = require('sequelize');
 
 // Get personalized video recommendations for a user
@@ -62,7 +62,7 @@ async function getContentBasedRecommendations(user, limit) {
   const videos = await Video.findAll({
     where: whereClause,
     include: [{
-      model: require('../entity/postgres/Channel'),
+      model: require('../entity/Channel'),
       as: 'channel',
       attributes: ['id', 'name', 'description']
     }],
@@ -102,7 +102,7 @@ async function getCollaborativeRecommendations(userId, limit) {
       },
       required: true
     }, {
-      model: require('../entity/postgres/Channel'),
+      model: require('../entity/Channel'),
       as: 'channel',
       attributes: ['id', 'name', 'description']
     }],
@@ -165,7 +165,7 @@ async function getTrendingVideos(limit = 20) {
       createdAt: { [Op.gte]: oneWeekAgo }
     },
     include: [{
-      model: require('../entity/postgres/Channel'),
+      model: require('../entity/Channel'),
       as: 'channel',
       attributes: ['id', 'name', 'description']
     }],
@@ -185,7 +185,7 @@ async function getUserRecommendations(userId, limit = 20) {
       model: Video,
       as: 'video',
       include: [{
-        model: require('../entity/postgres/Channel'),
+        model: require('../entity/Channel'),
         as: 'channel',
         attributes: ['id', 'name', 'description']
       }]
