@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../entity/postgres/User');
-const UserWatchHistory = require('../entity/postgres/UserWatchHistory');
+const User = require('../entity/User');
+const UserWatchHistory = require('../entity/UserWatchHistory');
 
 // User registration
 async function registerUser(userData) {
@@ -138,10 +138,10 @@ async function getUserWatchHistory(userId, options = {}) {
   const history = await UserWatchHistory.findAll({
     where: { userId },
     include: [{
-      model: require('../entity/postgres/Video'),
+      model: require('../entity/Video'),
       as: 'video',
       include: [{
-        model: require('../entity/postgres/Channel'),
+        model: require('../entity/Channel'),
         as: 'channel',
         attributes: ['id', 'name']
       }]
