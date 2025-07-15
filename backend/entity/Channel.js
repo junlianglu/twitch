@@ -14,6 +14,24 @@ const Channel = sequelize.define('Channel', {
   description: {
     type: DataTypes.TEXT,
   },
+  avatar: {
+    type: DataTypes.STRING,
+  },
+  banner: {
+    type: DataTypes.STRING,
+  },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 });
 
 module.exports = Channel;

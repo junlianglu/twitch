@@ -66,9 +66,12 @@ async function loginUser(credentials) {
   await user.update({ lastLoginAt: new Date() });
   
   // Generate JWT token
+  if (!process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET environment variable is required');
+  }
   const token = jwt.sign(
     { userId: user.id, username: user.username },
-    process.env.JWT_SECRET || 'your-secret-key',
+    process.env.JWT_SECRET,
     { expiresIn: '24h' }
   );
   
@@ -198,7 +201,10 @@ async function addWatchHistory(userId, videoId, watchData) {
 // Verify JWT token
 async function verifyToken(token) {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+    if (!process.env.JWT_SECRET) {
+      throw new Error('JWT_SECRET environment variable is required');
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await getUserById(decoded.userId);
     return user;
   } catch (error) {

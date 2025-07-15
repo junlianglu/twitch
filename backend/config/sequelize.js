@@ -8,13 +8,13 @@ const sequelize = new Sequelize(
     host: process.env.POSTGRES_HOST,
     port: process.env.POSTGRES_PORT || 5432,
     dialect: 'postgres',
-    logging: false,
-    dialectOptions: {
+    logging: process.env.NODE_ENV === 'development',
+    dialectOptions: process.env.NODE_ENV === 'production' ? {
       ssl: {
         require: true,
         rejectUnauthorized: false, // Accept AWS self-signed cert
       },
-    },
+    } : {},
   }
 );
 
