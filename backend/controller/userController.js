@@ -186,12 +186,10 @@ const getWatchHistory = asyncHandler(async (req, res) => {
   
   res.json({
     success: true,
-    history: history.rows,
+    history: history,
     pagination: {
-      total: history.count,
       limit: parseInt(limit),
-      offset: parseInt(offset),
-      hasMore: parseInt(offset) + parseInt(limit) < history.count
+      offset: parseInt(offset)
     }
   });
 });
